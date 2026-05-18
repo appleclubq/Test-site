@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой Сайт</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Темный, современный фон */
+            background: linear-gradient(135deg, #1e1e2f 0%, #2a2a40 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        .container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            border-radius: 12px; /* Слегка скругленные края в стиле iOS */
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 180px;
+        }
+
+        /* Стиль первой кнопки (синий градиент) */
+        .btn-primary {
+            background: linear-gradient(45deg, #007aff, #005bb5);
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+        }
+
+        /* Стиль второй кнопки (фиолетовый градиент) */
+        .btn-secondary {
+            background: linear-gradient(45deg, #8a2387, #e94057);
+            box-shadow: 0 4px 15px rgba(233, 64, 87, 0.4);
+        }
+
+        /* Эффект при наведении курсора */
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Замените символ # на нужную вам ссылку -->
+        <a href="#" class="btn btn-primary">Установить профиль</a>
+        
+        <!-- Замените символ # на ссылку вашего канала -->
+        <a href="#" class="btn btn-secondary">Наш Telegram</a>
+    </div>
+
+</body>
+</html>
