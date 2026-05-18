@@ -3,67 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Сайт</title>
+    <title>Установка репозитория AppBank</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
+        }
+
+        body {
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Темный, современный фон */
-            background: linear-gradient(135deg, #1e1e2f 0%, #2a2a40 100%);
+            /* Глубокий темный фон с легким радиальным свечением в центре */
+            background: radial-gradient(circle at center, #161622 0%, #0d0d13 100%);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-        
-        .container {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
+            color: #ffffff;
             padding: 20px;
         }
 
-        .btn {
-            padding: 16px 32px;
-            font-size: 18px;
+        .card {
+            background-color: #12121a;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 32px;
+            width: 100%;
+            max-width: 400px;
+            padding: 32px 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Маленькая светящаяся зеленая кнопка-плашка */
+        .badge {
+            background: rgba(46, 213, 115, 0.1);
+            color: #2ed573;
+            border: 1px solid rgba(46, 213, 115, 0.3);
+            padding: 6px 16px;
+            border-radius: 12px;
+            font-size: 13px;
             font-weight: 600;
-            color: white;
+            text-transform: lowercase; /* Как на скриншоте */
+            margin-bottom: 24px;
             text-decoration: none;
-            border-radius: 12px; /* Слегка скругленные края в стиле iOS */
             transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(46, 213, 115, 0.15);
+        }
+
+        .badge:hover {
+            background: rgba(46, 213, 115, 0.2);
+            box-shadow: 0 0 20px rgba(46, 213, 115, 0.3);
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
             text-align: center;
-            min-width: 180px;
+            letter-spacing: -0.5px;
         }
 
-        /* Стиль первой кнопки (синий градиент) */
-        .btn-primary {
-            background: linear-gradient(45deg, #007aff, #005bb5);
-            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+        .subtitle {
+            font-size: 14px;
+            color: #8e8e93;
+            text-align: center;
+            line-height: 1.4;
+            margin-bottom: 32px;
+            padding: 0 10px;
         }
 
-        /* Стиль второй кнопки (фиолетовый градиент) */
-        .btn-secondary {
-            background: linear-gradient(45deg, #8a2387, #e94057);
-            box-shadow: 0 4px 15px rgba(233, 64, 87, 0.4);
+        .buttons-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
         }
 
-        /* Эффект при наведении курсора */
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        /* Общий стиль для основных интерактивных элементов */
+        .btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        /* Стиль первой кнопки (Feather) */
+        .btn-dark {
+            background-color: #1c1c27;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .btn-dark:hover {
+            background-color: #252533;
+            transform: translateY(-2px);
+        }
+
+        /* Стиль второй кнопки (Основная синяя со свечением) */
+        .btn-blue {
+            background: #007aff;
+            color: #ffffff;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0, 122, 255, 0.35);
+            margin-top: 10px;
+        }
+
+        .btn-blue:hover {
+            background: #1a87ff;
+            box-shadow: 0 12px 28px rgba(0, 122, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Настройка иконок внутри кнопок */
+        .btn i {
+            margin-right: 14px;
+            flex-shrink: 0;
+        }
+
+        /* Цвет иконки Feather (оранжевое перо) */
+        .icon-feather {
+            color: #ffa502;
+        }
+
+        /* Стрелочка справа в темной кнопке */
+        .arrow-right {
+            margin-left: auto;
+            color: #48484a;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Замените символ # на нужную вам ссылку -->
-        <a href="#" class="btn btn-primary">Установить профиль</a>
-        
-        <!-- Замените символ # на ссылку вашего канала -->
-        <a href="#" class="btn btn-secondary">Наш Telegram</a>
+    <div class="card">
+        <a href="#" class="badge">telegram apple club</a>
+
+        <h1 class="title">Выберите действие</h1>
+        <p class="subtitle">Установите менеджер приложений Feather для работы с IPA или добавьте наш репозиторий напрямую.</p>
+
+        <div class="buttons-container">
+            <a href="#" class="btn btn-dark">
+                <i data-lucide="feather" class="icon-feather"></i>
+                <span>Установить Feather</span>
+                <i data-lucide="chevron-right" class="arrow-right"></i>
+            </a>
+
+            <a href="#" class="btn btn-blue">
+                <i data-lucide="github"></i>
+                <span>Добавить репозиторий</span>
+            </a>
+        </div>
     </div>
 
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
