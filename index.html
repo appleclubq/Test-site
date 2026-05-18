@@ -5,262 +5,243 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Установщик Apple Club</title>
     <style>
-        /* --- БАЗОВЫЕ НАСТРОЙКИ И ШРИФТЫ --- */
         :root {
-            --bg-color: #0f1015;
-            --card-bg: rgba(28, 30, 36, 0.7);
+            --bg-color: #0b0b0d; /* Почти черный как на макете */
+            --card-bg: rgba(23, 23, 26, 0.8);
             --text-main: #ffffff;
-            --text-secondary: #8e8e93;
-            --button-bg: #151517;
-            --button-border: rgba(255, 255, 255, 0.08);
+            --text-secondary: #98989d;
+            --button-bg: #111113;
+            --button-border: rgba(255, 255, 255, 0.1);
             --accent-blue: #007aff;
-            --glow-color: rgba(255, 255, 255, 0.15);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            -webkit-tap-highlight-color: transparent; /* Убираем стандартное выделение при клике на iOS */
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            /* Системные шрифты Apple для максимальной схожести с iOS */
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
             background-color: var(--bg-color);
-            /* Сложный фон: темный цвет + синее свечение по бокам, как на макете */
-            background-image: 
-                radial-gradient(circle at 0% 50%, rgba(10, 60, 150, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 100% 50%, rgba(10, 60, 150, 0.15) 0%, transparent 40%);
-            background-attachment: fixed;
             color: var(--text-main);
             display: flex;
             justify-content: center;
             min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        /* Контейнер, ограничивающий ширину для мобилок */
+        /* УЛУЧШЕННЫЙ ФОН: Свечение теперь строго сзади */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(circle at 100% 40%, rgba(28, 62, 144, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 0% 60%, rgba(20, 50, 120, 0.2) 0%, transparent 50%);
+            z-index: -1; /* Гарантирует, что фон не перекроет текст */
+        }
+
         .app-container {
             width: 100%;
-            max-width: 480px; /* Ограничение ширины для планшетов/ПК */
-            padding: 32px 20px;
+            max-width: 420px;
+            padding: 40px 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            z-index: 1;
         }
 
-        /* --- 1 КНОПКА (САМАЯ ВЕРХНЯЯ) --- */
-        .top-pill-btn {
+        /* --- ВЕРХНЯЯ КНОПКА (ПИЛЮЛЯ) --- */
+        .top-pill-link {
             display: flex;
             align-items: center;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--button-border);
-            border-radius: 30px;
-            padding: 6px 12px 6px 6px;
+            border-radius: 40px;
+            padding: 4px 12px 4px 4px;
             text-decoration: none;
-            color: var(--text-main);
-            font-size: 13px;
+            color: white;
+            font-size: 14px;
             font-weight: 500;
-            margin-bottom: 24px;
-            transition: all 0.2s ease;
+            margin-bottom: 30px;
+            transition: 0.2s ease;
         }
 
-        /* Анимация свечения при нажатии для всех рабочих кнопок */
-        .active-glow:active {
-            transform: scale(0.96);
-            box-shadow: 0 0 15px var(--glow-color);
-            background: rgba(255, 255, 255, 0.1);
+        .top-pill-link:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 15px rgba(255,255,255,0.1);
         }
 
-        .top-pill-btn .icons-group {
+        .avatar-group {
             display: flex;
-            align-items: center;
-            margin-right: 8px;
+            margin-right: 10px;
         }
 
-        .top-pill-btn .icon-circle {
-            width: 24px;
-            height: 24px;
+        .avatar-circle {
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
-            background-color: #333;
+            border: 2px solid var(--bg-color);
+            background: #222;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: -6px; /* Наложение иконок друг на друга */
-            border: 2px solid var(--bg-color);
-            overflow: hidden;
         }
+        
+        .avatar-circle:last-child { margin-left: -8px; }
 
-        /* Текст в верхней кнопке */
-        .top-pill-btn .pill-text {
-            background-color: #1d9bf0; /* Цвет твиттера/тг из макета */
-            border-radius: 12px;
+        .tg-label {
+            background: #0088cc;
             padding: 2px 8px;
-            font-size: 12px;
-            margin-left: 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
         }
 
         /* --- ЗАГОЛОВКИ --- */
-        h1.main-title {
-            font-size: 38px;
+        .main-header {
+            font-size: 42px;
             font-weight: 800;
             text-align: center;
-            line-height: 1.1;
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
+            line-height: 0.95;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
         }
 
-        p.main-subtitle {
-            font-size: 15px;
+        .sub-header {
+            font-size: 16px;
             color: var(--text-main);
             text-align: center;
             line-height: 1.4;
-            margin-bottom: 32px;
-            padding: 0 10px;
-            opacity: 0.9;
+            opacity: 0.8;
+            margin-bottom: 35px;
         }
 
-        /* --- ГЛАВНАЯ КАРТОЧКА --- */
-        .content-card {
+        /* --- КАРТОЧКА --- */
+        .main-card {
             background: var(--card-bg);
             border: 1px solid var(--button-border);
-            border-radius: 28px;
-            padding: 24px 20px;
+            border-radius: 32px;
+            padding: 24px;
             width: 100%;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            margin-bottom: 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
-        .section-title {
-            font-size: 20px;
+        .card-title {
+            font-size: 22px;
             font-weight: 700;
             margin-bottom: 12px;
         }
 
-        .step-text {
-            font-size: 13px;
+        .step-desc {
+            font-size: 14px;
             color: var(--text-secondary);
+            margin-bottom: 18px;
             line-height: 1.4;
-            margin-bottom: 16px;
         }
 
-        /* --- РАБОЧИЕ КНОПКИ (2 и 3) --- */
-        .action-btn {
+        /* --- КНОПКИ ДЕЙСТВИЯ --- */
+        .action-button {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             background: var(--button-bg);
             border: 1px solid var(--button-border);
-            border-radius: 16px;
-            padding: 12px 16px;
+            border-radius: 18px;
+            padding: 14px 16px;
             text-decoration: none;
-            color: var(--text-main);
-            margin-bottom: 20px;
-            transition: all 0.2s ease;
+            color: white;
+            margin-bottom: 16px;
+            transition: 0.2s;
         }
 
-        .btn-left {
-            display: flex;
-            align-items: center;
-            font-size: 17px;
-            font-weight: 600;
+        .action-button:active {
+            transform: scale(0.97);
+            box-shadow: 0 0 20px rgba(255,255,255,0.05);
+            background: #18181b;
         }
 
-        /* Место для иконки в кнопке */
-        .btn-icon-placeholder {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background-color: #333; /* Временный цвет заглушки */
-            margin-right: 12px;
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: #222;
+            margin-right: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            flex-shrink: 0;
         }
 
-        /* Иконка стрелочки вправо */
-        .arrow-icon {
-            opacity: 0.4;
+        .btn-text {
+            font-size: 18px;
+            font-weight: 600;
+            flex-grow: 1;
         }
 
-        /* Разделитель */
+        .arrow { opacity: 0.3; }
+
         .divider {
             height: 1px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: none;
+            background: rgba(255,255,255,0.08);
             margin: 24px 0;
+            border: none;
         }
 
-        /* --- БЛОК ОШИБКИ (ВИЗУАЛЬНЫЙ) --- */
-        .error-box {
-            background: rgba(30, 32, 40, 0.6);
+        /* --- ОШИБКА --- */
+        .error-card {
+            background: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--button-border);
-            border-radius: 20px;
+            border-radius: 22px;
             padding: 20px;
             text-align: center;
-            margin-bottom: 16px;
+            margin: 15px 0;
         }
 
-        .error-title {
-            font-size: 17px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            line-height: 1.3;
-        }
-
-        .error-desc {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-            line-height: 1.3;
-        }
-
-        /* Визуальная кнопка ОК (не кликабельная) */
-        .fake-ok-btn {
-            background-color: var(--accent-blue);
+        .error-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .error-text { font-size: 14px; color: var(--text-secondary); margin-bottom: 20px; }
+        
+        .ios-blue-btn {
+            background: var(--accent-blue);
             color: white;
-            font-size: 17px;
             font-weight: 600;
             padding: 12px;
             border-radius: 14px;
-            width: 100%;
+            font-size: 17px;
         }
 
-        .footer-text {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.4;
-            margin-bottom: 16px;
-        }
-
-        /* --- ПОДВАЛ --- */
-        .bottom-badge {
-            display: inline-flex;
+        /* --- ФУТЕР --- */
+        .safe-badge {
+            display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--button-border);
-            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
             padding: 6px 16px;
+            border-radius: 20px;
             font-size: 14px;
-            margin-bottom: 20px;
+            border: 1px solid var(--button-border);
+            margin-top: 30px;
+            margin-bottom: 15px;
         }
 
-        .green-dot {
+        .dot {
             width: 8px;
             height: 8px;
-            background-color: #34c759; /* Системный зеленый iOS */
+            background: #34c759;
             border-radius: 50%;
             margin-right: 8px;
-            box-shadow: 0 0 8px rgba(52, 199, 89, 0.5);
+            box-shadow: 0 0 10px #34c759;
         }
 
-        .copyright {
+        .copy {
             font-size: 12px;
             color: var(--text-secondary);
             text-align: center;
-            line-height: 1.4;
+            line-height: 1.5;
         }
     </style>
 </head>
@@ -268,73 +249,69 @@
 
 <div class="app-container">
 
-    <a href="#" class="top-pill-btn active-glow">
-        <div class="icons-group">
-            <div class="icon-circle">
-                🍏 </div>
-            <div class="icon-circle" style="background-color: #0088cc;">
-                ✈️ </div>
+    <a href="#" class="top-pill-link">
+        <div class="avatar-group">
+            <div class="avatar-circle">
+                <img src="" alt="" style="width:100%; display:none;"> 🍏 
+            </div>
+            <div class="avatar-circle" style="background:#0088cc;">
+                <img src="" alt="" style="width:100%; display:none;"> ✈️
+            </div>
         </div>
-        <span class="pill-text">@appleclubq</span>
+        <div class="tg-label">@appleclubq</div>
     </a>
 
-    <h1 class="main-title">Установщик<br>Apple Club</h1>
-    <p class="main-subtitle">Пожалуйста, для успешной установки<br>следуйте инструкции из видео</p>
+    <h1 class="main-header">Установщик<br>Apple Club</h1>
+    <p class="sub-header">Пожалуйста, для успешной установки<br>следуйте инструкции из видео</p>
 
-    <div class="content-card">
-        
-        <h2 class="section-title">Установка приложений</h2>
-        <p class="step-text">#1 Установите Feather, с помощью него вы можете установить любое приложение на iPhone.</p>
+    <div class="main-card">
+        <h2 class="card-title">Установка приложений</h2>
+        <p class="step-desc">#1 Установите Feather, с помощью него вы можете установить любое приложение на iPhone.</p>
 
-        <a href="#" class="action-btn active-glow">
-            <div class="btn-left">
-                <div class="btn-icon-placeholder" style="background: linear-gradient(135deg, #64748b, #334155);">
-                    🪶 </div>
-                Установить Feather
+        <a href="#" class="action-button">
+            <div class="btn-icon">
+                <img src="" alt="" style="width:100%; display:none;"> 🪶
             </div>
-            <div class="arrow-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="btn-text">Установить Feather</span>
+            <div class="arrow">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
             </div>
         </a>
 
-        <p class="step-text">#2 После установки Feather, доверьте сертификат в настройках и импортируйте репозиторий нажав следующую кнопку.</p>
+        <p class="step-desc">#2 После установки Feather, доверьте сертификат в настройках и импортируйте репозиторий нажав следующую кнопку.</p>
 
-        <a href="#" class="action-btn active-glow">
-            <div class="btn-left">
-                <div class="btn-icon-placeholder" style="background-color: #ffffff;">
-                    🖤 </div>
-                Добавить репозиторий
+        <a href="#" class="action-button">
+            <div class="btn-icon" style="background: white;">
+                <img src="" alt="" style="width:100%; display:none;"> 🖤
             </div>
-            <div class="arrow-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="btn-text">Добавить репозиторий</span>
+            <div class="arrow">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
             </div>
         </a>
 
-        <p class="step-text">#3 Готово! Выбирайте приложение и устанавливайте.</p>
+        <p class="step-desc">#3 Готово! Выбирайте приложение и устанавливайте.</p>
 
         <hr class="divider">
 
-        <h2 class="section-title">Возможные ошибки</h2>
-        
-        <div class="error-box">
-            <h3 class="error-title">Не удаётся установить<br>приложение «Feather»</h3>
-            <p class="error-desc">Невозможно установить это приложение, так как не удалось проверить его целостность.</p>
-            <div class="fake-ok-btn">OK</div>
+        <h2 class="card-title">Возможные ошибки</h2>
+        <div class="error-card">
+            <div class="error-title">Не удаётся установить<br>приложение «Feather»</div>
+            <div class="error-text">Невозможно установить это приложение, так как не удалось проверить его целостность.</div>
+            <div class="ios-blue-btn">OK</div>
         </div>
 
-        <p class="footer-text">Если вы видите такое уведомление, то бесплатный сертификат перестал работать, и пока что установить приложение не получится.</p>
-        <p class="footer-text">Как только появится новый бесплатный способ, мы обновим ссылку и установка будет доступна. Следите за новостями в нашем Telegram канале.</p>
-
+        <p class="step-desc" style="margin-top: 20px;">Если вы видите такое уведомление, то бесплатный сертификат перестал работать...</p>
+        <p class="step-desc">Как только появится новый бесплатный способ, мы обновим ссылку. Следите в Telegram.</p>
     </div>
 
-    <div class="bottom-badge">
-        <div class="green-dot"></div>
+    <div class="safe-badge">
+        <div class="dot"></div>
         Безопасная установка
     </div>
 
-    <div class="copyright">
-        Apple Club 2026 ©<br>
-        Все права защищены
+    <div class="copy">
+        Apple Club 2026 ©<br>Все права защищены
     </div>
 
 </div>
