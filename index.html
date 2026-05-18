@@ -2,168 +2,342 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Установка репозитория AppBank</title>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Установщик Apple Club</title>
     <style>
+        /* --- БАЗОВЫЕ НАСТРОЙКИ И ШРИФТЫ --- */
+        :root {
+            --bg-color: #0f1015;
+            --card-bg: rgba(28, 30, 36, 0.7);
+            --text-main: #ffffff;
+            --text-secondary: #8e8e93;
+            --button-bg: #151517;
+            --button-border: rgba(255, 255, 255, 0.08);
+            --accent-blue: #007aff;
+            --glow-color: rgba(255, 255, 255, 0.15);
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent; /* Убираем стандартное выделение при клике на iOS */
         }
 
         body {
-            height: 100vh;
+            /* Системные шрифты Apple для максимальной схожести с iOS */
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            /* Сложный фон: темный цвет + синее свечение по бокам, как на макете */
+            background-image: 
+                radial-gradient(circle at 0% 50%, rgba(10, 60, 150, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 100% 50%, rgba(10, 60, 150, 0.15) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-main);
             display: flex;
             justify-content: center;
-            align-items: center;
-            /* Глубокий темный фон с легким радиальным свечением в центре */
-            background: radial-gradient(circle at center, #161622 0%, #0d0d13 100%);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            color: #ffffff;
-            padding: 20px;
+            min-height: 100vh;
         }
 
-        .card {
-            background-color: #12121a;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 32px;
+        /* Контейнер, ограничивающий ширину для мобилок */
+        .app-container {
             width: 100%;
-            max-width: 400px;
-            padding: 32px 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            max-width: 480px; /* Ограничение ширины для планшетов/ПК */
+            padding: 32px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* Маленькая светящаяся зеленая кнопка-плашка */
-        .badge {
-            background: rgba(46, 213, 115, 0.1);
-            color: #2ed573;
-            border: 1px solid rgba(46, 213, 115, 0.3);
-            padding: 6px 16px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            text-transform: lowercase; /* Как на скриншоте */
-            margin-bottom: 24px;
+        /* --- 1 КНОПКА (САМАЯ ВЕРХНЯЯ) --- */
+        .top-pill-btn {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--button-border);
+            border-radius: 30px;
+            padding: 6px 12px 6px 6px;
             text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(46, 213, 115, 0.15);
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            transition: all 0.2s ease;
         }
 
-        .badge:hover {
-            background: rgba(46, 213, 115, 0.2);
-            box-shadow: 0 0 20px rgba(46, 213, 115, 0.3);
+        /* Анимация свечения при нажатии для всех рабочих кнопок */
+        .active-glow:active {
+            transform: scale(0.96);
+            box-shadow: 0 0 15px var(--glow-color);
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        .title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 12px;
+        .top-pill-btn .icons-group {
+            display: flex;
+            align-items: center;
+            margin-right: 8px;
+        }
+
+        .top-pill-btn .icon-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: -6px; /* Наложение иконок друг на друга */
+            border: 2px solid var(--bg-color);
+            overflow: hidden;
+        }
+
+        /* Текст в верхней кнопке */
+        .top-pill-btn .pill-text {
+            background-color: #1d9bf0; /* Цвет твиттера/тг из макета */
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        /* --- ЗАГОЛОВКИ --- */
+        h1.main-title {
+            font-size: 38px;
+            font-weight: 800;
             text-align: center;
+            line-height: 1.1;
+            margin-bottom: 16px;
             letter-spacing: -0.5px;
         }
 
-        .subtitle {
-            font-size: 14px;
-            color: #8e8e93;
+        p.main-subtitle {
+            font-size: 15px;
+            color: var(--text-main);
             text-align: center;
             line-height: 1.4;
             margin-bottom: 32px;
             padding: 0 10px;
+            opacity: 0.9;
         }
 
-        .buttons-container {
+        /* --- ГЛАВНАЯ КАРТОЧКА --- */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--button-border);
+            border-radius: 28px;
+            padding: 24px 20px;
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            margin-bottom: 24px;
         }
 
-        /* Общий стиль для основных интерактивных элементов */
-        .btn {
-            width: 100%;
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .step-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+
+        /* --- РАБОЧИЕ КНОПКИ (2 и 3) --- */
+        .action-btn {
             display: flex;
             align-items: center;
-            padding: 16px 20px;
+            justify-content: space-between;
+            background: var(--button-bg);
+            border: 1px solid var(--button-border);
             border-radius: 16px;
+            padding: 12px 16px;
             text-decoration: none;
-            font-size: 16px;
-            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 20px;
             transition: all 0.2s ease;
         }
 
-        /* Стиль первой кнопки (Feather) */
-        .btn-dark {
-            background-color: #1c1c27;
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+        .btn-left {
+            display: flex;
+            align-items: center;
+            font-size: 17px;
+            font-weight: 600;
         }
 
-        .btn-dark:hover {
-            background-color: #252533;
-            transform: translateY(-2px);
-        }
-
-        /* Стиль второй кнопки (Основная синяя со свечением) */
-        .btn-blue {
-            background: #007aff;
-            color: #ffffff;
+        /* Место для иконки в кнопке */
+        .btn-icon-placeholder {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background-color: #333; /* Временный цвет заглушки */
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 24px rgba(0, 122, 255, 0.35);
-            margin-top: 10px;
+            overflow: hidden;
         }
 
-        .btn-blue:hover {
-            background: #1a87ff;
-            box-shadow: 0 12px 28px rgba(0, 122, 255, 0.5);
-            transform: translateY(-2px);
+        /* Иконка стрелочки вправо */
+        .arrow-icon {
+            opacity: 0.4;
         }
 
-        /* Настройка иконок внутри кнопок */
-        .btn i {
-            margin-right: 14px;
-            flex-shrink: 0;
+        /* Разделитель */
+        .divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            margin: 24px 0;
         }
 
-        /* Цвет иконки Feather (оранжевое перо) */
-        .icon-feather {
-            color: #ffa502;
+        /* --- БЛОК ОШИБКИ (ВИЗУАЛЬНЫЙ) --- */
+        .error-box {
+            background: rgba(30, 32, 40, 0.6);
+            border: 1px solid var(--button-border);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 16px;
         }
 
-        /* Стрелочка справа в темной кнопке */
-        .arrow-right {
-            margin-left: auto;
-            color: #48484a;
+        .error-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .error-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        /* Визуальная кнопка ОК (не кликабельная) */
+        .fake-ok-btn {
+            background-color: var(--accent-blue);
+            color: white;
+            font-size: 17px;
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 14px;
+            width: 100%;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+
+        /* --- ПОДВАЛ --- */
+        .bottom-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--button-border);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .green-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #34c759; /* Системный зеленый iOS */
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 0 8px rgba(52, 199, 89, 0.5);
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.4;
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <a href="#" class="badge">telegram apple club</a>
+<div class="app-container">
 
-        <h1 class="title">Выберите действие</h1>
-        <p class="subtitle">Установите менеджер приложений Feather для работы с IPA или добавьте наш репозиторий напрямую.</p>
-
-        <div class="buttons-container">
-            <a href="#" class="btn btn-dark">
-                <i data-lucide="feather" class="icon-feather"></i>
-                <span>Установить Feather</span>
-                <i data-lucide="chevron-right" class="arrow-right"></i>
-            </a>
-
-            <a href="#" class="btn btn-blue">
-                <i data-lucide="github"></i>
-                <span>Добавить репозиторий</span>
-            </a>
+    <a href="#" class="top-pill-btn active-glow">
+        <div class="icons-group">
+            <div class="icon-circle">
+                🍏 </div>
+            <div class="icon-circle" style="background-color: #0088cc;">
+                ✈️ </div>
         </div>
+        <span class="pill-text">@appleclubq</span>
+    </a>
+
+    <h1 class="main-title">Установщик<br>Apple Club</h1>
+    <p class="main-subtitle">Пожалуйста, для успешной установки<br>следуйте инструкции из видео</p>
+
+    <div class="content-card">
+        
+        <h2 class="section-title">Установка приложений</h2>
+        <p class="step-text">#1 Установите Feather, с помощью него вы можете установить любое приложение на iPhone.</p>
+
+        <a href="#" class="action-btn active-glow">
+            <div class="btn-left">
+                <div class="btn-icon-placeholder" style="background: linear-gradient(135deg, #64748b, #334155);">
+                    🪶 </div>
+                Установить Feather
+            </div>
+            <div class="arrow-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+        </a>
+
+        <p class="step-text">#2 После установки Feather, доверьте сертификат в настройках и импортируйте репозиторий нажав следующую кнопку.</p>
+
+        <a href="#" class="action-btn active-glow">
+            <div class="btn-left">
+                <div class="btn-icon-placeholder" style="background-color: #ffffff;">
+                    🖤 </div>
+                Добавить репозиторий
+            </div>
+            <div class="arrow-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+        </a>
+
+        <p class="step-text">#3 Готово! Выбирайте приложение и устанавливайте.</p>
+
+        <hr class="divider">
+
+        <h2 class="section-title">Возможные ошибки</h2>
+        
+        <div class="error-box">
+            <h3 class="error-title">Не удаётся установить<br>приложение «Feather»</h3>
+            <p class="error-desc">Невозможно установить это приложение, так как не удалось проверить его целостность.</p>
+            <div class="fake-ok-btn">OK</div>
+        </div>
+
+        <p class="footer-text">Если вы видите такое уведомление, то бесплатный сертификат перестал работать, и пока что установить приложение не получится.</p>
+        <p class="footer-text">Как только появится новый бесплатный способ, мы обновим ссылку и установка будет доступна. Следите за новостями в нашем Telegram канале.</p>
+
     </div>
 
-    <script>
-        lucide.createIcons();
-    </script>
+    <div class="bottom-badge">
+        <div class="green-dot"></div>
+        Безопасная установка
+    </div>
+
+    <div class="copyright">
+        Apple Club 2026 ©<br>
+        Все права защищены
+    </div>
+
+</div>
+
 </body>
 </html>
